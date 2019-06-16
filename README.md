@@ -1,6 +1,6 @@
 # PSX Controller to DB15 Adapter.
 
-This is an Arduino sketch converting PSX controller inputs to discrete outputs. I desinged it for Arcade Supergun use but it could be adapted for use in many other control applications that require discrete outputs.
+This is an Arduino sketch converting PSX controller inputs to discrete outputs. I desinged it for Arcade Supergun use but it could be adapted for use in many other control applications that require discrete outputs. This code is dependent on the PSX.h library. You need to install that library in order to compile the sketch. https://github.com/dcunited001/arduino-psx/blob/master/Psx.h
 
 # Instructions
 
