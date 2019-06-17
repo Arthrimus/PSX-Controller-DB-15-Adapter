@@ -49,17 +49,13 @@ int ST = 11;
 Psx Psx;                                                  // Initializes the library
 
 unsigned int data = 0;                                    // data stores the controller response
-int buttonmap = 0; // buttonmap stores the current buttonmap mode setting
-int timer = 0;
-int combo = 0;
 
 void setup()
 {
   Psx.setupPins(dataPin, cmndPin, attPin, clockPin, 5);  // Defines what each pin is used
                                                           // (Data Pin #, Cmnd Pin #, Att Pin #, Clk Pin #, Delay)
                                                           // Delay measures how long the clock remains at each state,
-                                                          // measured in microseconds. too small delay may not work (under 5)
-
+                                                          // measured in microseconds.
   pinMode(UP, OUTPUT);  // declares buttons as outputs (don't change these)
   pinMode(DN, OUTPUT); 
   pinMode(LT, OUTPUT);
@@ -71,38 +67,16 @@ void setup()
   pinMode(SQ, OUTPUT);
   pinMode(R2, OUTPUT);
   pinMode(SL, OUTPUT);
-  pinMode(ST,OUTPUT);                                                       
+  pinMode(ST,OUTPUT);                                                        // too small delay may not work (under 5)
 
-  delay(100);
-  }
+}
 
 void loop()
 {
-
-if (combo == 0){
-  sixbuttonmode();
-}
-else if (combo == 3){
-  neogeomode ();
- }
-}
-
-void sixbuttonmode(){
-  if (combo >= 0){
-    combo = 0;
-  }
   data = Psx.read();                                      // Psx.read() initiates the PSX controller and returns
-  
-  if (data & psxSlct) {
-    digitalWrite(SL, LOW);
-    combo = combo + 1;                     
-  }
-  else
-  {
-    digitalWrite(SL, HIGH);                                                            // the button data
-  }
+                                                          // the button data
   if (data & psxX) {
-    digitalWrite(X, LOW);                    
+    digitalWrite(X, LOW);                     
   }
   else
   {
@@ -116,8 +90,7 @@ void sixbuttonmode(){
     digitalWrite(O, HIGH);                            
   }
       if (data & psxSqu) {
-    digitalWrite(SQ, LOW); 
-    combo = combo + 1;                      
+    digitalWrite(SQ, LOW);                     
   }
   else
   {
@@ -143,11 +116,16 @@ void sixbuttonmode(){
   else
   {
     digitalWrite(R2, HIGH);                            
-                         
+  }
+      if (data & psxSlct) {
+    digitalWrite(SL, LOW);                     
+  }
+  else
+  {
+    digitalWrite(SL, HIGH);                            
   }
       if (data & psxStrt) {
-    digitalWrite(ST, LOW);
-    combo = combo + 1;                       
+    digitalWrite(ST, LOW);                     
   }
   else
   {
@@ -181,110 +159,5 @@ void sixbuttonmode(){
   {
     digitalWrite(RT, HIGH);                            
   }
-      if (combo == 3){
-      delay(1000);
-     } else {
-      combo = 0;
-     }
-
-}
-void neogeomode(){
-   if (combo <= 3){
-    combo = 3;
-  }
-   data = Psx.read();                                      // Psx.read() initiates the PSX controller and returns
   
-  if (data & psxSlct) {
-    digitalWrite(SL, LOW);
-    combo = combo - 1;                     
-  }
-  else
-  {
-    digitalWrite(SL, HIGH);                                                            // the button data
-  }
-  if (data & psxX) {
-    digitalWrite(SQ, LOW);                     
-  }
-  else
-  {
-    digitalWrite(SQ, HIGH);                            
-  }
-    if (data & psxO) {
-    digitalWrite(O, LOW);                 
-  }
-  else
-  {
-    digitalWrite(O, HIGH);                            
-  }
-      if (data & psxSqu) {
-    digitalWrite(TR, LOW); 
-    combo = combo - 1;                          
-  }
-  else
-  {
-    digitalWrite(TR, HIGH);                            
-  }
-    if (data & psxTri) {
-    digitalWrite(R1, LOW);                     
-  }
-  else
-  {
-    digitalWrite(R1, HIGH);                            
-  }
-      if (data & psxR1) {
-    digitalWrite(X, LOW);                    
-  }
-  else
-  {
-    digitalWrite(X, HIGH);                            
-  }
-      if (data & psxR2) {
-    digitalWrite(R2, LOW);                     
-  }
-  else
-  {
-    digitalWrite(R2, HIGH);                            
-                         
-  }
-      if (data & psxStrt) {
-    digitalWrite(ST, LOW); 
-    combo = combo - 1;                          
-  }
-  else
-  {
-    digitalWrite(ST, HIGH);                            
-  }
-  if (data & psxUp) {
-    digitalWrite(UP, LOW);                     
-  }
-  else
-  {
-    digitalWrite(UP, HIGH);                            
-  }
-      if (data & psxDown) {
-    digitalWrite(DN, LOW);                     
-  }
-  else
-  {
-    digitalWrite(DN, HIGH);                            
-  }
-      if (data & psxLeft) {
-    digitalWrite(LT, LOW);                     
-  }
-  else
-  {
-    digitalWrite(LT, HIGH);                            
-  }
-      if (data & psxRight) {
-    digitalWrite(RT, LOW);                     
-  }
-  else
-  {
-    digitalWrite(RT, HIGH);                            
-  }
-       if (combo == 0){
-      delay(1000);
-     } else {
-      combo = 3;
-     }
 }
