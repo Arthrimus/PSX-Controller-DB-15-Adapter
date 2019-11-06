@@ -42,7 +42,7 @@ void setup()
   
 void loop()
 {
-
+delay(16);
 if (combo == 0){
   sixbuttonmode();
 }
