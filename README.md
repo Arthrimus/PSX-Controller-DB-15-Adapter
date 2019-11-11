@@ -36,13 +36,13 @@ In the code folder there is an arduino sketch labeled "PSX_to_DB15_Remap.ino" Th
 To enter button remapping mode hold any 2 face buttons and START simultaniously for 3 seconds.
 Once in remapping mode press each button the corresponding number of times to achive the desired output based on the list below.
 
- - SQUARE   = 1 press
- - TRIANGLE = 2 presses
- - R1       = 3 presses
- - CIRCLE   = 4 presses
- - CROSS    = 5 presses
- - R2       = 6 presses
- - N/A = 7 presses
+ - Button 1  = 1 press
+ - Button 2  = 2 presses
+ - Button 3  = 3 presses
+ - Button 4  = 4 presses
+ - Button 5  = 5 presses
+ - Button 6  = 6 presses
+ - N/A       = 7 presses
  
  In the code folder there is another sketch labaled "PSX_to_DB15_Remap_AF.ino" This is an experemental firmware that has the same button remapping system as the above version, but also adds auto fire capability as well. 
  
