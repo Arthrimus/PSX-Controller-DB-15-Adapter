@@ -5,6 +5,8 @@ This is an Arduino sketch converting PSX controller inputs to discrete outputs. 
 # Instructions
 
 The upload the .ino file to an Arduino Uno or similar compatible device and connect the I/O pins according to the layout described in the .ino file. If you wish to remap the buttons you can modify the pin selections in the file to suit your needs. 
+  
+For the custom PCB version you will need to program the compiled HEX file that matches your MCU of choice. This project will work with Atmega88, 168, and 328 models. I recommend using AVRDUDESS for easy GUI based programming. You can use a USBASP and make an adapter cable using a male DB15 connector for programming. The SPI pinout for the DB15 connector is listed on the bottom silkscreen of the PCB.
 # Pinout (Arduino pin labels) 
 
   These values are hard coded and cannot be easily changed. This is because the code uses direct port maniplulation to set the button outputs to open drain when not pressed. This is a safety feature.
