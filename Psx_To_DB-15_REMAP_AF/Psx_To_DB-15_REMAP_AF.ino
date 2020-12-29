@@ -49,6 +49,7 @@ int remapcount = 0;              // variable for storing the count for the butto
 int bfcount = 0;
 int remapcombo = 0;              // variable for storing the button combo state
 int combodelay = 160;             // variable for storing the number of cycles for the combo timer
+int combodelay2 = 220;           // variable for storing the number of cycles for combo timer 2
 int NB = 0;                      // variable for storing the number of face buttons pressed simultaniously.
 int autofire = 0;
 int autofirecombo = 0;
@@ -59,6 +60,8 @@ int autofiretimer3 = 0;
 int autofiretimer4 = 0;
 int autofiretimer5 = 0;
 int autofiretimer6 = 0;
+int HASmode = 0;
+int HAScount = 0;
 //Buttonmap Values
 int SQO = 1;                      // Stores the current output map for each input
 int TRO = 2;
@@ -108,12 +111,24 @@ Psx Psx;                                                  // Initializes the lib
 
 unsigned int data = 0;                                    // data stores the controller response
 
-void setup()
-{
+void setup(){
   Psx.setupPins(dataPin, cmndPin, attPin, clockPin, 5);  // Defines what each pin is used
                                                           // (Data Pin #, Cmnd Pin #, Att Pin #, Clk Pin #, Delay)
                                                           // Delay measures how long the clock remains at each state,
-                                                          // measured in microseconds. too small delay may not work (under 5)                                                   
+                                                          // measured in microseconds. too small delay may not work (under 5)   
+ HASmode = EEPROM.read(17);
+if (HASmode != 0 && HASmode != 1){
+  HASmode = 1;
+  EEPROM.write(17,HASmode);
+}
+
+  if (HASmode == 0){
+    for (int i = 0; i <= 11; i++) {
+    DDRD = 0;
+    delay(16);
+    DDRD |= 1;
+    delay(16);
+  }
 TRO = EEPROM.read(0);
 SQO = EEPROM.read(1);
 R2O = EEPROM.read(2);
@@ -130,16 +145,13 @@ XA = EEPROM.read(11);
 R1A = EEPROM.read(12);
 L1A = EEPROM.read(15);
 L2A = EEPROM.read(16);
-
-  delay(100);
-  for (int i = 0; i <= 11; i++) {
-    DDRD = 0;
-    delay(16);
-    DDRD |= 1;
-    delay(16);
   }
-
-  }
+if (HASmode == 1){
+   DDRD |= 1;
+   delay(1000);
+   DDRD = 0;
+}
+}
   
 void loop()
 {
@@ -342,8 +354,68 @@ if (TR == 1 || SQ == 1 || R1 == 1 || O == 1 || X == 1 || R2 == 1 || L1 == 1 || L
 }
 
 void buttoncombos(){
+if (L1C == 1 && (R1C == 1 && (SL == 1 && (L1P == 1 && (R1P == 1 && (SLP == 1)))))){        // Checks if Start and 3 buttons are pressed. 
+  HAScount = (HAScount + 1);
+}else{ 
+  HAScount = 0;
+}
+
+if (HAScount >= combodelay2){{{
+HAScount = 0;
+HASmode = (HASmode + 1); 
+ }
+if (HASmode > 1){
+  HASmode = 0;
+    for (int i = 0; i <= 11; i++) {
+    DDRD = 0;
+    delay(16);
+    DDRD |= 1;
+    delay(16);
+  }
+TRO = EEPROM.read(0);
+SQO = EEPROM.read(1);
+R2O = EEPROM.read(2);
+OO = EEPROM.read(3);
+XO = EEPROM.read(4);
+R1O = EEPROM.read(5);
+L1O = EEPROM.read(13);
+L2O = EEPROM.read(14);
+TRA = EEPROM.read(7);
+SQA = EEPROM.read(8);
+R2A = EEPROM.read(9);
+OA = EEPROM.read(10);
+XA = EEPROM.read(11);
+R1A = EEPROM.read(12);
+L1A = EEPROM.read(15);
+L2A = EEPROM.read(16);
+  }else{   
+    DDRD |= 1;
+   delay(1000);
+   DDRD = 0;
+   DDRB = 0;                      // Stores the current output map for each input
+SQO = 1;                     
+TRO = 2;
+R1O = 3;
+XO = 4;
+OO = 5;
+R2O = 6;
+L1O = 0;
+L2O = 0;
+TRA = 0;                      // Stores the current autofire setting for each input
+SQA = 0;
+R2A = 0;
+OA = 0;
+XA = 0;
+R1A = 0;
+L1A = 0;
+L2A = 0;
+  }
+ 
+}
+EEPROM.write(17,HASmode);
+}
   
-if (ST == 1 && (NB == 2 && (STP == 1))){        // Checks if Start and 2 buttons are pressed. 
+if (ST == 1 && (NB == 2 && (STP == 1 && (HASmode == 0)))){        // Checks if Start and 2 buttons are pressed. 
   remapcount = (remapcount + 1);
 }else{ 
   remapcount = 0;
@@ -353,7 +425,7 @@ if (remapcount >= combodelay){
 remapcount = 0;
 buttonmap = 1;                // Sets buttonmap mode to 1 
  }
- if (ST == 1 && (NB == 1 && (STP == 1))){        // Checks if Start and 2 buttons are pressed. 
+ if (ST == 1 && (NB == 1 && (STP == 1 && (HASmode == 0)))){        // Checks if Start and 2 buttons are pressed. 
   autofirecount = (autofirecount + 1);
 }else{ 
   autofirecount = 0;
