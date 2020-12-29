@@ -61,4 +61,4 @@ Button mapping and auto fire settings are saved in the EEPROM so they will persi
 
 # Custom PCB Info.
 
-I have designed several prototype PCBs for this project. Currently they are available as Multi Console to DB15 adapters. They use the same DB15 pinout as Undamned's DB15 USB Decoders. You can order the most current version from <a href="https://oshpark.com/shared_projects/cfL23DQx">Oshpark</a> 
+The PCB folder has source files and Gerbers for the custom PCB version of this project.
