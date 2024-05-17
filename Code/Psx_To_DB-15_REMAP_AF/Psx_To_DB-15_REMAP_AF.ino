@@ -1,7 +1,7 @@
 /* PSX to DB-15 Adapter Firmware  
- *  Arthrimus 2019
+ *  Arthrimus 2024 
  *  
- *  Based on PSX Controller Decoder Library (Psx.pde)
+ *  Based on PSX Controller Decoder Library (Psx.h)
 	Written by: Kevin Ahrendt June 22nd, 2008
  
     This program is free software: you can redistribute it and/or modify
@@ -112,7 +112,7 @@ Psx Psx;                                                  // Initializes the lib
 unsigned int data = 0;                                    // data stores the controller response
 
 void setup(){
-  Psx.setupPins(dataPin, cmndPin, attPin, clockPin, 5);  // Defines what each pin is used
+  Psx.setupPins(dataPin, cmndPin, attPin, clockPin, 10);  // Defines what each pin is used
                                                           // (Data Pin #, Cmnd Pin #, Att Pin #, Clk Pin #, Delay)
                                                           // Delay measures how long the clock remains at each state,
                                                           // measured in microseconds. too small delay may not work (under 5)   
@@ -269,7 +269,7 @@ L1 = 0;
 L2 = 0;
 
 data = Psx.read();                                      // Psx.read() initiates the PSX controller and returns
-delay(16);
+delay(15);
 if (data & psxTri){
   TR = TRO; 
   TRC = 1;  
