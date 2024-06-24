@@ -168,7 +168,7 @@ if (buttonmap == 1){             // Stores output data for PORTB and PORTD based
   }
   DDRB = outputb;                // Sets PORTB and PORTD outputs based on inputs and the chosen buttonmap.
   DDRD = outputd;
-   delay(15);
+   delayMicroseconds(13700);
 }
 
 void setautofire(){
