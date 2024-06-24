@@ -168,6 +168,7 @@ if (buttonmap == 1){             // Stores output data for PORTB and PORTD based
   }
   DDRB = outputb;                // Sets PORTB and PORTD outputs based on inputs and the chosen buttonmap.
   DDRD = outputd;
+   delay(15);
 }
 
 void setautofire(){
@@ -269,7 +270,7 @@ L1 = 0;
 L2 = 0;
 
 data = Psx.read();                                      // Psx.read() initiates the PSX controller and returns
-delay(15);
+
 if (data & psxTri){
   TR = TRO; 
   TRC = 1;  
